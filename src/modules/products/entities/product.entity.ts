@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductStatus } from '../enums/products-status.enum';
+import { Exclude } from 'class-transformer';
 
 @Entity('products')
 export class Product {
@@ -8,10 +10,16 @@ export class Product {
   @Column({ type: 'varchar', name: 'code', length: 50, unique: true })
   code: string;
 
-  @Column({ type: 'varchar', name: 'status', length: 50 })
-  status: string;
+  @Exclude()
+  @Column({ type: 'enum', name: 'status', enum: ProductStatus })
+  status: ProductStatus;
 
-  @Column({ type: 'timestamp', name: 'imported_t', default: () => 'CURRENT_TIMESTAMP' })
+  @Exclude()
+  @Column({
+    type: 'timestamp',
+    name: 'imported_t',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   imported_t: Date;
 
   @Column({ type: 'varchar', name: 'url', length: 255 })
@@ -20,10 +28,18 @@ export class Product {
   @Column({ type: 'varchar', name: 'creator', length: 50 })
   creator: string;
 
-  @Column({ type: 'timestamp', name: 'created_t', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    name: 'created_t',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   created_t: Date;
 
-  @Column({ type: 'timestamp', name: 'last_modified_t', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    name: 'last_modified_t',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   last_modified_t: Date;
 
   @Column({ type: 'varchar', name: 'product_name', length: 100 })
